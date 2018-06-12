@@ -130,16 +130,9 @@ void main()
 
 						if (receivedPacketSize[k] >= packetlength)
 						{
-							int kdex = 0;
 							//  Parsing, main routine 
 							recvPacket[k].readData(recvBuffer, recvPacket[k].getDataFieldSize());
-							if (recvBuffer[0] == '!')
-								kdex = 1;
-							
-							if (kdex == 1)
-							{
-								recvPacket[k].getPacketBuffer()[4] = (char)(k+48);
-								for (int i = 0; i < MAX_CLIENT; i++)
+							for (int i = 0; i < MAX_CLIENT; i++)
 									if (socketClient[i] != INVALID_SOCKET && i != k)
 										::send(socketClient[i], recvPacket[k].getPacketBuffer(), recvPacket[k].getPacketSize(), 0);
 							}else printf("User %d Send To Server %d Bytes => %s\n", k, recvPacket[k].getDataFieldSize(), recvBuffer);
